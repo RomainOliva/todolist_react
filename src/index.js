@@ -4,18 +4,29 @@ import App from './App';
 import './index.css';
 import update from 'react-addons-update';
 
+/*
+ * Display remove button for each todolist item
+ *
+ * Parameter needed in the props :
+ * - onRemoveItemClick: an handler for remove an item in 'TodoItemRow'
+ */
 class RemoveItem extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
-    return (
-      <a onClick={this.props.onRemoveItemClick}>Remove</a>
-    );
+    return <a onClick={this.props.onRemoveItemClick}>Remove</a>;
   }
 }
 
+/*
+ * Display a line for every todolist item
+ *
+ * Parameter needed in the props :
+ * - items: array of all todolist item
+ * - onRemoveItem: an handler for remove an item from items state in 'TodoTable'
+ */
 class TodoItemRow extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +34,7 @@ class TodoItemRow extends React.Component {
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
+  //Send a remove item request in 'TodoTable'
   handleRemoveItem() {
     this.props.onRemoveItem(this.props.item.id);
   }
@@ -39,15 +51,27 @@ class TodoItemRow extends React.Component {
   }
 }
 
+/*
+ * This component handles the adding item form
+ * Display a button or a form according to the 'addingMode' status
+ *
+ * Parameter needed in the props :
+ * - items: array of all todolist item
+ * - addingMode: currently adding item or not
+ * - onUserInput: an handler for update items state in 'TodoTable'
+ * - onNewItemClick: an handler for switch in addingMode or not
+ */
 class TodoForm extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  //Send user input to 'TodoTable' on form submit
   handleSubmit(event) {
     this.props.onUserInput(
-      this.id.value,
+      this.props.items.length + 1,
       this.content.value
     );
     event.preventDefault();
@@ -66,12 +90,7 @@ class TodoForm extends React.Component {
         <input
           type="text"
           placeholder="item..."
-          value={this.props.content}
-          ref={(input) => {
-            this.id = this.props.items.length + 1;
-            this.content = input;
-          }}
-          onChange={this.handleChange}
+          ref={(input) => { this.content = input; }}
         />
 
         <input type="submit" value="Add" />
@@ -80,46 +99,53 @@ class TodoForm extends React.Component {
   }
 }
 
+//Owner of the two needed states : 'items' and 'addingMode'
+//It's the common owner component above all the components that need the state (TodoForm / TodoItemRow)
 class TodoTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [
-                    {id: 1, content: "Finir la todolist"},
-                    {id: 2, content: "Voir le widget"},
-                   ],
-                   addingMode: false
-                 };
 
+    //the two state of the application
+    //items: list of all todolist item
+    //addingMode: if the user is currently adding a todolist item or not
+    this.state = { items: [], addingMode: false };
+
+    //bind all needed handler
     this.handleUserInput = this.handleUserInput.bind(this);
     this.handleNewItemClick = this.handleNewItemClick.bind(this);
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
   }
 
+  //Add an item in the 'item state' according to user input (given in param) and close the adding item form
   handleUserInput(id, content) {
-    var itemToAdd = [{ id: id,content: content }];
+    var listItems = this.state.items;
+    listItems.push({ id: id, content: content });
 
     this.setState({
-      items: update(this.state.items, { $push: itemToAdd }),
+      items: listItems,
       addingMode: false
     });
   }
 
+  //Display the adding item form
   handleNewItemClick() {
     this.setState({addingMode: true});
   }
 
+  //Remove the item in the state "item" according to the 'id' in parameter
   handleRemoveItem(i) {
     var listItems = this.state.items;
-
-    var index = listItems.findIndex(function(item){
+    var index = listItems.findIndex((item) => {
      return item.id === i;
-    })
-
-    this.setState({
-      items: update(this.state.items, {$splice: [[index, 1]]})
     });
+
+    listItems.splice(index, 1);
+
+    this.setState({ items: listItems });
   }
 
+  //Display all todolist item, or specific sentence if they are no item
+  //Display also the 'add item form' or the button for open it
   render() {
     var rows = [];
 
@@ -131,8 +157,8 @@ class TodoTable extends React.Component {
       return (
         <table className="w100">
           <tbody>
-            <tr>
-              <td>there is no item currently</td>
+            <tr className="todoItemWrapper">
+              <td>There is no item currently</td>
             </tr>
             <tr>
               <td>
@@ -165,6 +191,7 @@ class TodoTable extends React.Component {
   }
 }
 
+//Construct the final rendering
 class Todolist extends React.Component {
   constructor(props) {
     super(props);
@@ -181,7 +208,12 @@ class Todolist extends React.Component {
   }
 }
 
+//Hook the render on the "root" DOM element
+const element = (
+  <Todolist />
+);
+
 ReactDOM.render(
-  <Todolist />,
+  element,
   document.getElementById('root')
 );
