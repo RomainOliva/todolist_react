@@ -11,10 +11,6 @@ import update from 'react-addons-update';
  * - onRemoveItemClick: an handler for remove an item in 'TodoItemRow'
  */
 class RemoveItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return <a onClick={this.props.onRemoveItemClick}>Remove</a>;
   }
@@ -78,7 +74,7 @@ class TodoForm extends React.Component {
   }
 
   render() {
-    if(this.props.addingMode == false) {
+    if(this.props.addingMode === false) {
       return (
         <button onClick={this.props.onNewItemClick}>
           Add item
@@ -153,7 +149,7 @@ class TodoTable extends React.Component {
       rows.push(<TodoItemRow item={item} key={item.id} onRemoveItem={this.handleRemoveItem}/>);
     });
 
-    if(rows.length == 0) {
+    if(rows.length === 0) {
       return (
         <table className="w100">
           <tbody>
@@ -193,10 +189,6 @@ class TodoTable extends React.Component {
 
 //Construct the final rendering
 class Todolist extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="todolistWrapper">
