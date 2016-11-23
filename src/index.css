@@ -3,3 +3,43 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.clearfix {
+  clear: both;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.todoItemWrapper{
+    clear: both;
+    width: 100%;
+    border: solid 1px #ccc;
+    display: block;
+    height: 30px;
+    padding: 10px 10px 0;
+    margin: 10px 0;
+}
+
+.todolistWrapper {
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.left {
+	text-align: left;
+  float: left;
+}
+
+.right {
+	text-align: right;
+  float: right;
+}
