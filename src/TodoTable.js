@@ -44,7 +44,7 @@ export default class TodoTable extends React.Component {
   //Display all todolist item, or specific sentence if they are no item
   //Display also the 'add item form' or the button for open it
   render() {
-    let rows = this.state.items.map( ( item, i ) => <TodoItemRow item={item} key={item.id} onRemoveItem={this.handleRemoveItem} index={i} />);
+    let rows = this.state.items.map( ( item, i ) => <TodoItemRow item={item} key={i} onRemoveItem={this.handleRemoveItem} index={i} />);
 
     if(rows.length === 0) {
       return (
