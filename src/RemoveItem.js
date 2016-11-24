@@ -6,7 +6,7 @@ import React from 'react';
  * Parameter needed in the props :
  * - onRemoveItemClick: an handler for remove an item in 'TodoItemRow'
  */
-class RemoveItem extends React.Component {
+export default class RemoveItem extends React.Component {
   render() {
     return <a onClick={this.props.onRemoveItemClick}>Remove</a>;
   }

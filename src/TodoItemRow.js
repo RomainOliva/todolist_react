@@ -8,7 +8,7 @@ import RemoveItem from "./RemoveItem";
  * - items: array of all todolist item
  * - onRemoveItem: an handler for remove an item from items state in 'TodoTable'
  */
-class TodoItemRow extends React.Component {
+export default class TodoItemRow extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +17,7 @@ class TodoItemRow extends React.Component {
 
   //Send a remove item request in 'TodoTable'
   handleRemoveItem() {
-    this.props.onRemoveItem(this.props.item.id);
+    this.props.onRemoveItem(this.props.index);
   }
 
   render() {

@@ -4,7 +4,7 @@ import TodoItemRow from "./TodoItemRow";
 
 //Owner of the two needed states : 'items' and 'addingMode'
 //It's the common owner component above all the components that need the state (TodoForm / TodoItemRow)
-class TodoTable extends React.Component {
+export default class TodoTable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,9 +20,9 @@ class TodoTable extends React.Component {
   }
 
   //Add an item in the 'item state' according to user input (given in param) and close the adding item form
-  handleUserInput(id, content) {
+  handleUserInput(content) {
     let listItems = this.state.items;
-    listItems.push({ id: id, content: content });
+    listItems.push({ content: content });
 
     this.setState({
       items: listItems,
@@ -35,20 +35,16 @@ class TodoTable extends React.Component {
     this.setState({addingMode: true});
   }
 
-  //Remove the item in the state "item" according to the 'id' in parameter
-  handleRemoveItem(i) {
-    let listItems = this.state.items;
-    let index = listItems.findIndex(item => { return item.id === i; });
-
-    listItems.splice(index, 1);
-
-    this.setState({ items: listItems });
+  //Remove the item in the state "item" according to the 'index' in parameter
+  handleRemoveItem(index) {
+    let items = this.state.items.filter( ( _, i ) => i !== index );
+    this.setState({ items: items });
   }
 
   //Display all todolist item, or specific sentence if they are no item
   //Display also the 'add item form' or the button for open it
   render() {
-    let rows = this.state.items.map(item => <TodoItemRow item={item} key={item.id} onRemoveItem={this.handleRemoveItem}/>);
+    let rows = this.state.items.map( ( item, i ) => <TodoItemRow item={item} key={item.id} onRemoveItem={this.handleRemoveItem} index={i} />);
 
     if(rows.length === 0) {
       return (

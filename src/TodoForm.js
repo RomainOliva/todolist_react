@@ -10,7 +10,7 @@ import React from 'react';
  * - onUserInput: an handler for update items state in 'TodoTable'
  * - onNewItemClick: an handler for switch in addingMode or not
  */
-class TodoForm extends React.Component {
+export default class TodoForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,10 +21,7 @@ class TodoForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    this.props.onUserInput(
-      this.props.items.length + 1,
-      this.content.value
-    );
+    this.props.onUserInput( this.content.value );
   }
 
   render() {
