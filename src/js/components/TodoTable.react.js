@@ -7,7 +7,7 @@ export default class TodoTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allTodos: TodoStore.getAllTodo()
+      data: TodoStore.getData()
     };
   }
 
@@ -22,7 +22,7 @@ export default class TodoTable extends React.Component {
 
   onChange() {
     this.setState({
-      allTodos: TodoStore.getAllTodo(),
+      data: TodoStore.getData(),
     });
   }
 
@@ -30,7 +30,7 @@ export default class TodoTable extends React.Component {
    * @return
    */
   render() {
-    let rows = this.state.allTodos.items.map( ( item, i ) => <TodoItemRow item={item} key={i} index={i} /> );
+    let rows = this.state.data.items.map( ( item, i ) => <TodoItemRow item={item} key={i} index={i} /> );
 
     if(rows.length === 0) {
       return (
@@ -41,7 +41,7 @@ export default class TodoTable extends React.Component {
             </tr>
             <tr>
               <td>
-                <TodoForm items={this.state.allTodos.items} />
+                <TodoForm />
                 </td>
             </tr>
           </tbody>
@@ -54,7 +54,7 @@ export default class TodoTable extends React.Component {
         <table className="w100">
           <tbody>{rows}</tbody>
         </table>
-        <TodoForm items={this.state.allTodos.items} />
+        <TodoForm />
       </div>
     );
   }

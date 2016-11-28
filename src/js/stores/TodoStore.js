@@ -2,48 +2,48 @@ import AppDispatcher       from "../dispatcher/AppDispatcher";
 import TodoConstants    from "../constants/TodoConstants";
 import { EventEmitter } from "events";
 
-let allTodos = {
+let data = {
   addingMode: false,
   items: [],
   content: ""
 };
 
 class TodoStore extends EventEmitter {
-  getAllTodo() {
-    return allTodos;
+  getData() {
+    return data;
   }
 
   changeContent( newContent ) {
-    allTodos.content = newContent;
+    data.content = newContent;
 
     this.emitChange();
   }
 
   addItem( newItemContent ) {
-    allTodos.content = "";
-    allTodos.addingMode = false;
+    data.content = "";
+    data.addingMode = false;
 
-    let listItems = allTodos.items;
+    let listItems = data.items;
     listItems.push({ content: newItemContent });
 
-    allTodos.items = listItems;
+    data.items = listItems;
 
     this.emitChange();
   }
 
   removeItem( index ) {
-    let items = allTodos.items.filter( ( _, i ) => i !== index );
-    allTodos.items = items;
+    let items = data.items.filter( ( _, i ) => i !== index );
+    data.items = items;
     this.emitChange();
   }
 
   showForm() {
-    allTodos.addingMode = true;
+    data.addingMode = true;
     this.emitChange();
   }
 
   hideForm() {
-    allTodos.addingMode = false;
+    data.addingMode = false;
     this.emitChange();
   }
 

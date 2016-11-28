@@ -6,14 +6,14 @@ export default class TodoForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allTodos: TodoStore.getAllTodo()
+      data: TodoStore.getData()
     };
   }
 
   onSubmit(event) {
     event.preventDefault();
 
-    TodoActions.addItem(this.state.allTodos.content);
+    TodoActions.addItem(this.state.data.content);
   }
 
   onNewItemClick() {
@@ -35,7 +35,7 @@ export default class TodoForm extends React.Component {
 
   onChange() {
     this.setState({
-      allTodos: TodoStore.getAllTodo()
+      data: TodoStore.getData()
     });
   }
 
@@ -43,7 +43,7 @@ export default class TodoForm extends React.Component {
    * @return
    */
   render() {
-    if( !this.state.allTodos.addingMode ) {
+    if( !this.state.data.addingMode ) {
       return (
         <button onClick={ this.onNewItemClick }>
           Add item
@@ -55,7 +55,7 @@ export default class TodoForm extends React.Component {
         <input
           type="text"
           placeholder="item..."
-          value={ this.state.allTodos.content }
+          value={ this.state.data.content }
           onChange={ this.changeContent.bind(this) } />
 
         <input type="submit" value="Add" />
